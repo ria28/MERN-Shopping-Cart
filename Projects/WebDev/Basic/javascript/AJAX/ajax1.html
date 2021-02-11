@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax Demo</title>
+</head>
+
+<body>
+    <button id="but">Click Me</button>
+    <div id="text"></div>
+    <script>
+        document.getElementById("but").addEventListener('click', loadText);
+
+        function loadText() {
+            // XHR object
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "sample.txt", true);
+            // runs only when state is 4
+                // xhr.onload = function () {
+                //     if (xhr.status == 200) {
+                //         console.log(xhr.responseText);
+                //     }
+                // }
+
+
+            // another way of writing on load 
+            //ready state values 
+            // 0 : req not init    1 : server connec established    2 : request received   3: processing request  4: req finshed and response ready
+            xhr.onreadystatechange = function () {
+                // console.log(xhr.readyState,xhr.status);
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseText);
+                    document.getElementById("text").innerHTML = this.response; // this is xhr
+                }
+            }
+            xhr.send();
+        }
+    </script>
+
+</body>
+</html>

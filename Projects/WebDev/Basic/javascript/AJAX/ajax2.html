@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax- Local JSON</title>
+    <style>
+        #para {
+            display: flex;
+            background: #f4f4f4;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        #para ul {
+            list-style: none;
+        }
+
+        .users {
+            display: flex;
+            background: #f4f4f4;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .users ul {
+            list-style:square;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>User</h2>
+    <button id="b1">User Info</button>
+    <h2>Users</h2>
+    <button id="b2">Users Info</button>
+    <button id="b3">Get GitHub Users</button>
+    <!-- <p id="para"></p> -->
+    <div id="users"></div>
+    <script>
+        document.getElementById("b1").addEventListener("click", loadUser);
+
+        function loadUser() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "user.json", true);
+
+            xhr.onload = function () {
+                if (this.status == 200)
+                    console.log(xhr.responseText);
+                var user = JSON.parse(xhr.responseText);
+                // console.log(user.name);
+                var output = "";
+                output += "<ul>" + "<li>" + user.id + "</li>" + "<li>" + user.name + "</li>" + "<li>" + user.email +
+                    "</li>" + "</ul>";
+                document.getElementById("para").innerHTML = output;
+            }
+            xhr.send();
+        }
+
+
+        document.getElementById("b2").addEventListener("click", loadUsers);
+
+        function loadUsers() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "users.json", true);
+
+            xhr.onload = function () {
+                if (this.status == 200)
+                    console.log(xhr.responseText);
+                var users = JSON.parse(xhr.responseText);
+                // console.log(user.name);
+                var output = "";
+
+                for (var i in users)
+                    output += "<ul>" +
+                    "<li>" + users[i].id + "</li>" +
+                    "<li>" + users[i].name + "</li>" +
+                    "<li>" + users[i].email + "</li>" +
+                    "</ul>";
+                document.getElementById("para").innerHTML = output;
+            }
+            xhr.send();
+        }
+
+        document.getElementById("b3").addEventListener("click", loadUsers_git);
+
+        function loadUsers_git() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "https://api.github.com/users", true);
+
+            xhr.onload = function () {
+                if (this.status == 200)
+                    console.log(xhr.responseText);
+                var users = JSON.parse(xhr.responseText);
+                // console.log(user.name);
+                var output = "";
+
+                for (var i in users)
+                    output += "<div class = users>" +
+                    "<img src=" + users[i].avatar_url + "width='70' height ='70'>" +
+                    "<ul>" +
+                    "<li>" + users[i].id + "</li>" +
+                    "<li>" + users[i].login + "</li>" +
+                    "</ul>" +
+                    "</div>";
+                document.getElementById("users").innerHTML = output;
+            }
+            xhr.send();
+        }
+    </script>
+
+</body>
+
+</html>
+
+
+<!--  curl -i -u your_username:your_token https://api.github.com/user -->
+<!-- // 68480c4f132dcb2f7564f712816e950e5fc657da -->

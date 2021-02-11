@@ -1,0 +1,9 @@
+AJAX - The XMLHttpRequest Object
+API in the form of object
+provided by browser js environment
+its methods transfer data b/w client and server
+can work with data other than XML (JSON, plain text)
+
+
+LIBRARIES and METHODS
+jQuery, Axios, Superagent , Fetch API , Prototype, NODE HTTP
